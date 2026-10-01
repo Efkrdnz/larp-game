@@ -52,4 +52,4 @@ Start with $10,000, a rusty hatchback, a rented studio and a junior job → earn
 - **Store** (`src/store/useGame.ts`): zustand; a 250 ms loop advances `speed/4` game minutes per tick; components re-render on a tick counter. Autosave to IndexedDB every 15 s and on tab hide.
 - **Charts**: TradingView `lightweight-charts` for candles; small custom SVG charts elsewhere.
 - **Art**: procedural SVG components in `src/ui/art` (no image assets, fully customisable, tiny download).
-- **Deploy**: `.github/workflows/deploy.yml` builds and publishes `dist/` to GitHub Pages on push to `main`.
+- **Deploy**: `.github/workflows/deploy.yml` builds on push to `main` and publishes `dist/` to the `gh-pages` branch served by GitHub Pages.

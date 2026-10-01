@@ -27,10 +27,11 @@ npm test           # engine unit tests (Vitest)
 npm run build      # production build into dist/
 ```
 
-## Deploy to GitHub Pages
+## Play / deploy
 
-1. In the repository settings, open **Settings → Pages** and set **Source** to **GitHub Actions** (one-time).
-2. Push to `main` (or run the *Deploy to GitHub Pages* workflow manually). The site is published at `https://<user>.github.io/<repo>/`.
+Live at **https://efkrdnz.github.io/larp-game/**
+
+Every push to `main` runs the tests, builds the game and publishes `dist/` to the `gh-pages` branch, which GitHub Pages serves (see `.github/workflows/deploy.yml`). If Pages is ever switched off, re-enable it under **Settings → Pages → Deploy from a branch → `gh-pages` / `(root)`**.
 
 ## Project layout
 
