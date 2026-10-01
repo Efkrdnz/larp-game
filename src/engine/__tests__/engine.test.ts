@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { COMPANIES } from '../data/companies';
 import { MIN_PER_DAY, OPEN_MIN, isMarketOpen, nextOpen } from '../calendar';
-import { advance, newGame } from '../game';
+import { advance, migrateGame, newGame } from '../game';
+import { ITEM_BY_ID, LEGACY_ITEM_IDS, SHOP_ITEMS, CATEGORY_FACETS } from '../data/shopItems';
 import { bribeGuard, goToTrial, takePlea } from '../justice';
 import { publishNews } from '../news';
 import { executeTrade, marketOrder, netWorth, placeOrder, validateTrade } from '../portfolio';
@@ -121,14 +122,14 @@ describe('shop', () => {
   it('buy, customise and sell an item', () => {
     const g = newGame('T', 9);
     g.player.cash = 1_000_000;
-    expect(buyItem(g, 'car-rosso')).toBeNull();
-    const owned = g.inventory.find((o) => o.itemId === 'car-rosso')!;
+    expect(buyItem(g, 'car-ferrari-roma')).toBeNull();
+    const owned = g.inventory.find((o) => o.itemId === 'car-ferrari-roma')!;
     const cash = g.player.cash;
     expect(customiseItem(g, owned.uid, { ...owned.custom, rims: 'gold', spoiler: true })).toBeNull();
     expect(g.player.cash).toBeLessThan(cash);
     expect(owned.custom.rims).toBe('gold');
     expect(sellItem(g, owned.uid)).toBeNull();
-    expect(g.inventory.some((o) => o.itemId === 'car-rosso')).toBe(false);
+    expect(g.inventory.some((o) => o.itemId === 'car-ferrari-roma')).toBe(false);
   });
 });
 
@@ -203,5 +204,48 @@ describe('net worth', () => {
   it('includes cash, securities and assets', () => {
     const g = newGame('T', 15);
     expect(netWorth(g)).toBeCloseTo(10000 + 6500, 0);
+  });
+});
+
+describe('catalogue', () => {
+  it('has hundreds of items with unique ids', () => {
+    expect(SHOP_ITEMS.length).toBeGreaterThan(400);
+    expect(new Set(SHOP_ITEMS.map((i) => i.id)).size).toBe(SHOP_ITEMS.length);
+    for (const c of ['cars', 'watches', 'homes', 'luxury'] as const) expect(SHOP_ITEMS.filter((i) => i.category === c).length).toBeGreaterThan(30);
+  });
+
+  it('every item has sane numbers and all filter facets', () => {
+    for (const i of SHOP_ITEMS) {
+      expect(i.price).toBeGreaterThan(0);
+      expect(Number.isFinite(i.upkeepPerDay)).toBe(true);
+      for (const f of CATEGORY_FACETS[i.category]) expect(i.facets[f.key], `${i.id} ${f.key}`).toBeTruthy();
+    }
+  });
+
+  it('legacy item ids all map to real items', () => {
+    for (const [oldId, newId] of Object.entries(LEGACY_ITEM_IDS)) expect(ITEM_BY_ID[newId], oldId).toBeDefined();
+  });
+
+  it('migrates an old save inventory', () => {
+    const g = newGame('T', 16);
+    g.inventory = [
+      { uid: 'a', itemId: 'car-kompakt', boughtFor: 6500, boughtAt: 0, custom: { paint: '#000000' } },
+      { uid: 'b', itemId: 'watch-daytona', boughtFor: 52000, boughtAt: 0, custom: {} },
+      { uid: 'c', itemId: 'does-not-exist', boughtFor: 1, boughtAt: 0, custom: {} },
+    ];
+    migrateGame(g);
+    expect(g.inventory.map((o) => o.itemId)).toEqual(['car-volkswagen-golf-mk5-2008-used', 'watch-rolex-daytona-everose-gold']);
+    expect(g.inventory[0].custom.paint).toBe('#000000');
+    expect(g.inventory[0].custom.rims).toBe('stock');
+  });
+});
+
+describe('catalogue numbers', () => {
+  it('homes have positive bedrooms and areas', () => {
+    for (const i of SHOP_ITEMS.filter((x) => x.category === 'homes')) {
+      expect(i.stats.size, i.id).toBeGreaterThan(0);
+      expect(Number(i.specs[0][1]), i.id).toBeGreaterThan(0);
+      expect(i.summary, i.id).not.toMatch(/-\d/);
+    }
   });
 });

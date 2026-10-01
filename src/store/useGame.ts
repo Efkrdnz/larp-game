@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { get as idbGet, set as idbSet, del as idbDel } from 'idb-keyval';
-import { advance, newGame, offlineMinutes, pushInbox, SAVE_VERSION, workGig } from '../engine/game';
+import { advance, migrateGame, newGame, offlineMinutes, pushInbox, SAVE_VERSION, workGig } from '../engine/game';
 import type { GameEvent, GameState } from '../engine/types';
 
 const SAVE_KEY = 'capital-save-v1';
@@ -88,6 +88,7 @@ export const useGame = create<Store>((set, get) => ({
     try {
       const saved = (await idbGet(SAVE_KEY)) as GameState | undefined;
       if (saved && saved.version === SAVE_VERSION) {
+        migrateGame(saved);
         const away = offlineMinutes(saved);
         let awaySummary = null;
         if (away > 30 && !saved.trial) {
@@ -132,6 +133,7 @@ export const useGame = create<Store>((set, get) => ({
     try {
       const g = JSON.parse(decodeURIComponent(escape(atob(code.trim())))) as GameState;
       if (g.version !== SAVE_VERSION || !g.stocks || !g.player) return 'That save code is not valid for this version.';
+      migrateGame(g);
       g.lastSavedReal = Date.now();
       set({ game: g, tick: 0, toasts: [] });
       void get().save();

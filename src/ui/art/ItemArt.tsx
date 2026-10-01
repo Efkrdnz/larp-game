@@ -23,13 +23,13 @@ export default function ItemArt({ item, custom, minuteOfDay = 600, className = '
     case 'home':
       return <HomeArt style={a.style} custom={c as unknown as HomeCustom} hour={Math.floor(minuteOfDay / 60)} className={className} />;
     case 'watch':
-      return <WatchArt style={a.style} metal={a.metal} custom={c as unknown as WatchCustom} minutes={minuteOfDay} className={className} />;
+      return <WatchArt style={a.style} metal={a.metal} label={a.label} bezel={a.bezel} custom={c as unknown as WatchCustom} minutes={minuteOfDay} className={className} />;
     case 'yacht':
       return <YachtArt size={a.size} hull={String(c.hull)} name={String(c.name ?? '')} lights={Boolean(c.lights)} className={className} />;
     case 'jet':
-      return <JetArt livery={String(c.livery)} tail={String(c.tail ?? '')} className={className} />;
+      return <JetArt size={a.size} livery={String(c.livery)} tail={String(c.tail ?? '')} className={className} />;
     case 'heli':
-      return <HeliArt livery={String(c.livery)} tail={String(c.tail ?? '')} className={className} />;
+      return <HeliArt size={a.size} livery={String(c.livery)} tail={String(c.tail ?? '')} className={className} />;
   }
 }
 

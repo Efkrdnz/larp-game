@@ -77,12 +77,49 @@ export default function HomeArt({ style, custom, hour = 12, className }: { style
   const lit = phase !== 'day';
   const [skyTop, skyBottom] = SKY[phase];
   const beach = style === 'mansion' || style === 'island';
-  const ground = style === 'island' ? '#0e7490' : beach ? '#e9d8a6' : style === 'penthouse' ? '#374151' : '#3f7d3a';
+  const ground = style === 'island' ? '#0e7490' : beach ? '#e9d8a6' : style === 'penthouse' || style === 'apartment' ? '#374151' : style === 'chalet' ? '#f1f5f9' : '#3f7d3a';
   const { wall, roof } = custom;
   let building: React.ReactNode = null;
   let lightPath: [number, number][] = [];
 
   switch (style) {
+    case 'apartment':
+      building = (
+        <g>
+          <rect x="120" y="50" width="160" height="160" fill={wall} stroke="#00000022" />
+          <rect x="114" y="44" width="172" height="8" fill={roof} />
+          {[0, 1, 2, 3, 4, 5].map((r) => (
+            <g key={r}>
+              <Windows x={132} y={62 + r * 24} cols={5} rows={1} w={20} h={14} gx={8} gy={0} lit={lit && (r + 1) % 3 !== 0} />
+              <rect x="126" y={78 + r * 24} width="148" height="3" fill="#00000030" />
+            </g>
+          ))}
+          <rect x="182" y="110" width="40" height="22" fill={lit ? '#fbbf24' : '#93c5fd'} stroke="#f59e0b" strokeWidth="2" />
+          <rect x="176" y="130" width="52" height="4" fill="#d4a017" />
+          <rect x="186" y="180" width="28" height="30" fill="#1f2937" />
+          <rect x="182" y="176" width="36" height="5" fill={roof} />
+        </g>
+      );
+      lightPath = [[114, 44], [286, 44]];
+      break;
+    case 'chalet':
+      building = (
+        <g>
+          <path d="M70,140 L200,52 L330,140 Z" fill="#f8fafc" />
+          <rect x="90" y="132" width="220" height="78" fill={wall} />
+          {Array.from({ length: 10 }, (_, i) => <line key={i} x1="90" x2="310" y1={138 + i * 7.5} y2={138 + i * 7.5} stroke="#00000030" />)}
+          <path d="M70,140 L200,52 L330,140" fill="none" stroke={roof} strokeWidth="10" strokeLinejoin="round" />
+          <path d="M140,140 L200,98 L260,140 Z" fill={lit ? '#fbbf24' : '#93c5fd'} stroke={roof} strokeWidth="3" />
+          <line x1="200" x2="200" y1="100" y2="140" stroke={roof} strokeWidth="2" />
+          <rect x="100" y="150" width="200" height="6" fill={roof} />
+          {[110, 150, 230, 270].map((x) => <rect key={x} x={x} y="164" width="22" height="26" fill={lit ? '#fde68a' : '#93c5fd'} stroke={roof} strokeWidth="2" />)}
+          <rect x="186" y="170" width="28" height="40" fill="#451a03" />
+          <rect x="240" y="40" width="14" height="40" fill="#57534e" />
+          <path d="M70,140 L200,52 L330,140" fill="none" stroke="#f8fafc" strokeWidth="4" />
+        </g>
+      );
+      lightPath = [[70, 140], [200, 52], [330, 140]];
+      break;
     case 'suburban':
       building = (
         <g>

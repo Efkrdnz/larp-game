@@ -6,6 +6,8 @@ import { coverNegativeCash, marginCheck, netWorth, processOrders } from './portf
 import { RIVALS, updateRivals } from './rivals';
 import { dailyUpkeep } from './shop';
 import { checkTaxDeadline, quarterlyTax } from './tax';
+import { STARTER_CAR_ID } from './data/catalog/cars';
+import { ITEM_BY_ID, LEGACY_ITEM_IDS, defaultCustom } from './data/shopItems';
 import type { GameEvent, GameState, InboxMessage } from './types';
 
 export const SAVE_VERSION = 1;
@@ -55,7 +57,8 @@ export function newGame(name: string, seed = (Math.random() * 2 ** 31) | 0): Gam
     stats: { casinoWagered: 0, casinoNet: 0, bribesPaid: 0, tradesMade: 0 },
   };
   g.stocks = initStocks(g);
-  g.inventory.push({ uid: 'i0', itemId: 'car-kompakt', boughtFor: 6500, boughtAt: g.time, custom: { paint: '#9ca3af', rims: 'stock', wrap: 'none', tint: 'none', spoiler: false, lowered: false, plate: '' } });
+  const starter = ITEM_BY_ID[STARTER_CAR_ID];
+  g.inventory.push({ uid: 'i0', itemId: starter.id, boughtFor: starter.price, boughtAt: g.time, custom: defaultCustom(starter) });
   // A few days of back-news so the feed is not empty.
   g.time -= 2 * MIN_PER_DAY;
   scheduleNews(g);
@@ -76,6 +79,17 @@ export function newGame(name: string, seed = (Math.random() * 2 ** 31) | 0): Gam
     kind: 'info',
     title: 'Welcome to CAPITAL',
     body: `You have $${START_CASH.toLocaleString()}, a rusty hatchback and a junior job at Goldstein Brothers. The market opens at 09:30. Make it count.`,
+  });
+  return g;
+}
+
+/** Bring an older save up to date with the current catalogue (renamed/removed items). */
+export function migrateGame(g: GameState): GameState {
+  g.inventory = g.inventory.flatMap((o) => {
+    const id = ITEM_BY_ID[o.itemId] ? o.itemId : LEGACY_ITEM_IDS[o.itemId];
+    const item = id ? ITEM_BY_ID[id] : undefined;
+    if (!item) return [];
+    return [{ ...o, itemId: item.id, custom: { ...defaultCustom(item), ...o.custom } }];
   });
   return g;
 }

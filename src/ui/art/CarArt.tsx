@@ -21,6 +21,7 @@ interface Shape {
   tail: [number, number];
   deck: [number, number]; // spoiler anchor (x, y)
   hood: string; // area for carbon hood wrap
+  extra?: string; // dark interior details (open-top cars)
 }
 
 const SHAPES: Record<CarBody, Shape> = {
@@ -35,6 +36,31 @@ const SHAPES: Record<CarBody, Shape> = {
     windows: 'M148,56 L240,56 Q251,56 258,63 L282,82 L114,82 L138,62 Q142,56 148,56 Z',
     wheels: [104, 296], pillars: [196], doors: [130, 200, 268], head: [346, 94], tail: [42, 96], deck: [58, 84],
     hood: 'M300,82 Q346,86 356,98 L356,102 L292,96 Z',
+  },
+  coupe: {
+    body: 'M40,126 L40,102 Q42,92 56,88 L108,82 L150,56 Q160,50 174,50 L238,52 Q252,54 262,62 L296,84 Q346,88 356,100 L360,120 Q360,130 350,130 Z',
+    windows: 'M160,58 L236,59 Q248,60 255,67 L276,84 L126,84 L148,64 Q153,58 160,58 Z',
+    wheels: [106, 296], pillars: [], doors: [142, 256], head: [346, 98], tail: [42, 98], deck: [58, 86],
+    hood: 'M296,84 Q346,88 356,100 L356,104 L290,96 Z',
+  },
+  wagon: {
+    body: 'M40,128 L40,76 Q40,58 60,54 L150,50 L244,50 Q256,50 266,58 L300,82 Q346,86 356,98 L360,120 Q360,130 350,130 Z',
+    windows: 'M64,60 L240,58 Q251,58 258,65 L282,82 L56,82 L56,70 Q57,61 64,60 Z',
+    wheels: [104, 296], pillars: [130, 198], doors: [128, 198, 268], head: [346, 94], tail: [42, 80], deck: [52, 52],
+    hood: 'M300,82 Q346,86 356,98 L356,102 L292,96 Z',
+  },
+  crossover: {
+    body: 'M48,128 L48,80 Q48,64 62,58 L96,40 Q102,36 112,36 L246,38 Q260,40 270,50 L296,74 Q340,78 350,90 L352,122 Q352,130 344,130 Z',
+    windows: 'M110,44 L244,46 Q254,47 262,56 L280,74 L72,74 L96,52 Q101,44 110,44 Z',
+    wheels: [112, 290], pillars: [170, 226], doors: [160, 226, 286], head: [340, 86], tail: [50, 76], deck: [66, 38],
+    hood: 'M296,74 Q340,78 350,90 L350,94 L290,86 Z',
+  },
+  convertible: {
+    body: 'M40,126 L40,104 Q42,94 58,90 L120,84 L232,84 L250,70 L258,70 L292,84 Q348,90 358,104 L360,120 Q360,130 350,130 Z',
+    windows: 'M234,84 L251,70 L257,70 L244,84 Z',
+    wheels: [108, 294], pillars: [], doors: [150, 252], head: [348, 100], tail: [44, 98], deck: [62, 88],
+    hood: 'M292,84 Q348,90 358,104 L358,108 L286,98 Z',
+    extra: 'M118,86 L232,86 L232,90 L118,90 Z M150,86 q2,-20 16,-20 q8,0 8,20 Z M192,86 q2,-20 16,-20 q8,0 8,20 Z',
   },
   sports: {
     body: 'M40,126 L40,104 Q42,94 58,90 L120,82 L162,62 Q172,58 186,58 L238,58 Q252,58 262,66 L292,84 Q348,90 358,104 L360,120 Q360,130 350,130 Z',
@@ -165,6 +191,7 @@ export default function CarArt({ body, custom, className }: { body: CarBody; cus
           ))}
           <rect x="0" y="122" width="400" height="10" fill="#000" opacity="0.28" />
         </g>
+        {s.extra && <path d={s.extra} fill="#1f2937" />}
         <path d={s.windows} fill={`url(#${uid}-glass)`} stroke="#0b0e14" strokeWidth="2" />
         <path d={s.windows} fill="none" stroke="#fff" strokeOpacity="0.15" strokeWidth="1" transform="translate(2 2) scale(0.99)" />
         {s.pillars.map((x) => (

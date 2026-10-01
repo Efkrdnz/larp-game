@@ -1,8 +1,8 @@
 import { useId } from 'react';
 
-export function YachtArt({ size, hull, name, lights, className }: { size: 'small' | 'super'; hull: string; name: string; lights: boolean; className?: string }) {
+export function YachtArt({ size, hull, name, lights, className }: { size: 'small' | 'mid' | 'super' | 'mega'; hull: string; name: string; lights: boolean; className?: string }) {
   const uid = useId().replace(/:/g, '');
-  const big = size === 'super';
+  const big = size === 'super' || size === 'mega';
   return (
     <svg viewBox="0 0 400 200" className={className} role="img" aria-label="yacht">
       <defs>
@@ -38,6 +38,15 @@ export function YachtArt({ size, hull, name, lights, className }: { size: 'small
           <text x="72" y="116" textAnchor="middle" fontSize="5" fontWeight="800" fill="#fde047">H</text>
           <rect x="196" y="40" width="4" height="16" fill="#94a3b8" />
           <circle cx="198" cy="40" r="5" fill="#e2e8f0" />
+          {size === 'mega' && (
+            <g>
+              <path d="M170,56 L182,42 L224,42 L232,56 Z" fill="#cbd5e1" />
+              <rect x="186" y="46" width="34" height="5" fill="#0f172a" opacity="0.85" />
+              <rect x="20" y="132" width="330" height="5" fill="#d4a017" opacity="0.8" />
+              <ellipse cx="320" cy="90" rx="20" ry="3" fill="#94a3b8" />
+              <text x="320" y="92" textAnchor="middle" fontSize="5" fontWeight="800" fill="#fde047">H</text>
+            </g>
+          )}
         </g>
       ) : (
         <g>
@@ -46,6 +55,13 @@ export function YachtArt({ size, hull, name, lights, className }: { size: 'small
           <path d="M120,121 L150,98 L260,98 L292,118 Z" fill="#f8fafc" />
           <path d="M150,104 L262,104 L280,116 L140,116 Z" fill="#0f172a" opacity="0.85" />
           <rect x="226" y="86" width="3" height="12" fill="#94a3b8" />
+          {size === 'mid' && (
+            <g>
+              <path d="M160,98 L176,82 L236,82 L250,98 Z" fill="#f1f5f9" />
+              <rect x="180" y="86" width="50" height="6" fill="#0f172a" opacity="0.85" />
+              <path d="M196,82 L204,66 L214,66 L220,82" fill="none" stroke="#94a3b8" strokeWidth="3" />
+            </g>
+          )}
         </g>
       )}
       <rect x={big ? 30 : 92} y={big ? 128 : 130} width={big ? 330 : 222} height="3" fill="#fff" opacity="0.7" />
@@ -60,7 +76,9 @@ export function YachtArt({ size, hull, name, lights, className }: { size: 'small
   );
 }
 
-export function JetArt({ livery, tail, className }: { livery: string; tail: string; className?: string }) {
+export function JetArt({ size = 'large', livery, tail, className }: { size?: 'light' | 'mid' | 'large' | 'airliner'; livery: string; tail: string; className?: string }) {
+  const windows = { light: 5, mid: 7, large: 9, airliner: 13 }[size];
+  const scale = { light: 0.78, mid: 0.9, large: 1, airliner: 1 }[size];
   const uid = useId().replace(/:/g, '');
   return (
     <svg viewBox="0 0 400 180" className={className} role="img" aria-label="private jet">
@@ -79,14 +97,25 @@ export function JetArt({ livery, tail, className }: { livery: string; tail: stri
         <ellipse cx="70" cy="140" rx="60" ry="12" />
         <ellipse cx="320" cy="150" rx="80" ry="14" />
       </g>
+      <g transform={`translate(${200 - 200 * scale} ${90 - 90 * scale}) scale(${scale})`}>
       <path d="M150,104 L250,104 L190,150 L150,150 Z" fill="#94a3b8" />
+      {size === 'airliner' && (
+        <>
+          <ellipse cx="200" cy="132" rx="22" ry="8" fill="#cbd5e1" stroke="#64748b" />
+          <ellipse cx="183" cy="132" rx="4" ry="6" fill="#334155" />
+        </>
+      )}
       <path d="M40,90 Q40,72 70,70 L320,68 Q370,70 380,88 Q370,102 320,104 L70,106 Q40,106 40,90 Z" fill={`url(#${uid}-body)`} />
       <path d="M40,94 L380,90 Q376,96 360,100 L60,104 Q46,102 40,94 Z" fill={livery} />
       <path d="M50,72 L30,28 L56,28 L94,70 Z" fill={livery} />
       <path d="M36,34 L60,34" stroke="#fff" strokeWidth="2" />
-      <ellipse cx="96" cy="64" rx="26" ry="9" fill="#e2e8f0" stroke="#94a3b8" />
-      <ellipse cx="80" cy="64" rx="6" ry="6" fill="#334155" />
-      {Array.from({ length: 9 }, (_, i) => <ellipse key={i} cx={140 + i * 20} cy="82" rx="5" ry="5.5" fill="#1e293b" />)}
+      {size !== 'airliner' && (
+        <>
+          <ellipse cx="96" cy="64" rx="26" ry="9" fill="#e2e8f0" stroke="#94a3b8" />
+          <ellipse cx="80" cy="64" rx="6" ry="6" fill="#334155" />
+        </>
+      )}
+      {Array.from({ length: windows }, (_, i) => <ellipse key={i} cx={130 + i * (size === 'airliner' ? 16 : 20)} cy="82" rx="5" ry="5.5" fill="#1e293b" />)}
       <path d="M350,76 Q362,78 368,86 L346,86 Z" fill="#1e293b" />
       <path d="M150,96 L250,96 L230,112 L160,112 Z" fill="#cbd5e1" />
       {tail && (
@@ -94,11 +123,12 @@ export function JetArt({ livery, tail, className }: { livery: string; tail: stri
           {tail.toUpperCase()}
         </text>
       )}
+      </g>
     </svg>
   );
 }
 
-export function HeliArt({ livery, tail, className }: { livery: string; tail: string; className?: string }) {
+export function HeliArt({ size = 'light', livery, tail, className }: { size?: 'light' | 'twin'; livery: string; tail: string; className?: string }) {
   const uid = useId().replace(/:/g, '');
   return (
     <svg viewBox="0 0 400 180" className={className} role="img" aria-label="helicopter">
@@ -125,7 +155,17 @@ export function HeliArt({ livery, tail, className }: { livery: string; tail: str
       <rect x="226" y="44" width="10" height="14" fill="#475569" />
       <rect x="70" y="40" width="270" height="4" rx="2" fill="#1f2937" opacity="0.85" />
       <ellipse cx="231" cy="42" rx="140" ry="3" fill="#1f2937" opacity="0.15" />
-      <path d="M190,132 L300,132 M210,122 L204,132 M280,122 L286,132" stroke="#1f2937" strokeWidth="4" strokeLinecap="round" />
+      {size === 'twin' ? (
+        <g>
+          <path d="M172,92 Q170,74 196,70 L206,70 L206,118 L190,120 Q174,116 172,92 Z" fill={livery} />
+          <rect x="214" y="48" width="26" height="10" rx="4" fill="#475569" />
+          <circle cx="206" cy="130" r="6" fill="#1f2937" />
+          <circle cx="282" cy="130" r="6" fill="#1f2937" />
+          <rect x="170" y="84" width="20" height="14" rx="3" fill={`url(#${uid}-glass)`} />
+        </g>
+      ) : (
+        <path d="M190,132 L300,132 M210,122 L204,132 M280,122 L286,132" stroke="#1f2937" strokeWidth="4" strokeLinecap="round" />
+      )}
       {tail && (
         <text x="120" y="92" textAnchor="middle" fontSize="7" fontFamily="JetBrains Mono, monospace" fontWeight="700" fill="#fff">
           {tail.toUpperCase()}

@@ -4,13 +4,13 @@ A browser game about getting rich by any means necessary. Trade stocks on a news
 
 Runs entirely in the browser (no server), works on phones and desktops, installs as a PWA, and is hosted on GitHub Pages.
 
-> Satire. All companies, brands and people are fictional. No real money, no financial advice.
+> Satire. Stock-market companies, people and news are fictional. Shop items use real brand/model names for flavour only; trademarks belong to their owners, who are not affiliated with this game. No real money, no financial advice.
 
 ## Features (MVP)
 
 - **Stock market** — 40 fictional companies in 8 sectors, a correlated random-walk price engine with sector betas and mean reversion, real candlestick charts (1D / 5D / 3M / 1Y, line or candles, SMA), volume, market/limit/stop orders, short selling, margin calls, a cap-weighted CAP 500 index and a sector heatmap.
 - **News engine** — ~40 headline templates (earnings, scandals, recalls, takeovers, rate hikes, wars…). News moves prices; overnight news gaps the open; rumours spike prices but fade (and get stamped *Debunked*).
-- **Luxury mall** — 30 items across cars, real estate, watches and yachts/jets, all drawn procedurally in SVG with live customisation (paint, rims, wraps, tint, spoilers, plates, pools, gardens, party lights, diamond bezels, boat names…). Items appreciate or depreciate, cost upkeep and raise your reputation. Homes end your rent. Watches show the in-game time; houses switch to night.
+- **Luxury mall** — 550+ items: ~290 cars from 55 brands (Toyota to Bugatti), ~140 watches from 33 brands (Casio to Patek Philippe), ~70 homes in 24 cities and ~45 yachts, jets and helicopters. Faceted filters (brand, body style, powertrain, movement, material, city…), price range, search and sorting. Everything is drawn procedurally in SVG with live customisation (paint, rims, wraps, tint, spoilers, plates, pools, gardens, party lights, diamond bezels, boat names…). Items appreciate or depreciate, cost upkeep and raise your reputation. Homes end your rent. Watches show the in-game time; houses switch to night.
 - **Casino** — Blackjack (6-deck shoe, 3:2, double down) and European roulette with an animated wheel. Winnings are taxable.
 - **Underworld** — offshore shell accounts, insider tips, bribing tax inspectors / regulators / police (watch out for stings), and a criminal record.
 - **Heat & justice** — three agencies track your heat; high heat triggers investigations (bribe the investigator, lawyer up, or shred documents). Charges lead to a trial (public defender → star lawyer, bribe the judge, plea deal) and prison (laundry shifts, bribing guards, appeals). Your positions keep moving while you're inside.

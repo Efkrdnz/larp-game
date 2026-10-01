@@ -85,7 +85,7 @@ export default function Settings() {
       <div className="panel panel-pad space-y-2 text-sm text-ink-400">
         <div className="panel-title">About</div>
         <p>
-          <b className="text-ink-200">CAPITAL</b> is a satirical capitalism LARP. Every company, brand, person and product is fictional; any resemblance is parody. Nothing here is financial advice and no real money is involved. All art is drawn procedurally in code.
+          <b className="text-ink-200">CAPITAL</b> is a satirical capitalism LARP. Stock-market companies, people and news are fictional; any resemblance is parody. Shop items use real brand and model names for flavour only — trademarks belong to their owners, who are not affiliated with or endorsing this game. Prices and specs are approximate. Nothing here is financial advice and no real money is involved. All art is drawn procedurally in code.
         </p>
         <p>Market data is simulated: prices follow a correlated random walk with sector betas, mean reversion to fundamental value, and shocks from the news engine. Rumours move prices but fade; real news sticks.</p>
       </div>

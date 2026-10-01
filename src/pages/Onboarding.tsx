@@ -29,7 +29,7 @@ export default function Onboarding() {
             The ultimate capitalism LARP. Trade 40 stocks on a market driven by breaking news. Buy supercars, watches, mansions and yachts — and pimp them out. Hit the casino. Bribe officials, dodge taxes, trade on insider tips… and maybe end up in a cell.
           </p>
           <ul className="mt-5 grid max-w-lg grid-cols-2 gap-2 text-sm text-ink-200">
-            {['📈 Realistic candlestick charts', '📰 News that moves markets', '🏎️ Customisable cars & homes', '🎰 Blackjack & roulette', '💼 Bribes, tips & offshore', '⚖️ Investigations, trials, prison'].map((f) => (
+            {['📈 Realistic candlestick charts', '📰 News that moves markets', '🏎️ 550+ real cars, watches, homes & jets', '🎰 Blackjack & roulette', '💼 Bribes, tips & offshore', '⚖️ Investigations, trials, prison'].map((f) => (
               <li key={f} className="rounded-xl border border-ink-700 bg-ink-850 px-3 py-2">
                 {f}
               </li>
@@ -54,7 +54,7 @@ export default function Onboarding() {
             <label className="flex items-start gap-3 rounded-xl border border-ink-700 bg-ink-900 p-3 text-xs text-ink-300">
               <input type="checkbox" className="mt-0.5 h-4 w-4 accent-yellow-500" checked={agree} onChange={(e) => setAgree(e.target.checked)} />
               <span>
-                I understand this is a <b className="text-ink-100">satirical game</b>. All companies, brands and people are fictional. No real money is involved and nothing here is financial advice. Crimes in the game are fictional — please don't bribe real people.
+                I understand this is a <b className="text-ink-100">satirical game</b>. Stock-market companies and people are fictional; real product names in the shop are used for flavour only and their owners are not affiliated. No real money is involved and nothing here is financial advice. Crimes in the game are fictional — please don't bribe real people.
               </span>
             </label>
             <button className="btn-primary w-full py-3 text-base" disabled={!agree} onClick={() => start(name)}>

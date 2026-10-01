@@ -9,7 +9,7 @@ The ultimate capitalism LARP: a single web app (phone + PC, hosted on GitHub Pag
 1. **Everything is connected.** News moves markets; your purchases make headlines; laws you lobby for move sectors; scandals tank your reputation; prison freezes your trading.
 2. **Legal is slow but safe, illegal is fast but compounding risk.** Every shortcut adds heat; heat turns into investigations; investigations turn into trials.
 3. **Show, don't tell.** Every system has a visual: candlestick charts, a newspaper front page, a garage of customisable cars, an animated roulette wheel, a jail cell with tally marks.
-4. **Satire, not simulation-of-real-brands.** All companies, brands and people are fictional parodies.
+4. **Satire with real stuff to buy.** Stock-market companies, people and news are fictional parodies; the shop uses real brand/model names (text only, no logos, procedural art) so shopping feels real.
 
 ## Core loop
 
@@ -22,7 +22,7 @@ Start with $10,000, a rusty hatchback, a rented studio and a junior job → earn
 | Game clock | ✅ MVP | 1 real second = 1 game minute at 1×; speeds up to 240×; market 09:30–16:00 weekdays; skip to open; offline catch-up (max 8 game days). |
 | Stock market | ✅ MVP | 40 tickers / 8 sectors. Per-minute log-returns = market factor × sector beta + sector factor + idiosyncratic noise, mean reversion toward a fundamental value, news drift. 250 days of generated history. Market/limit/stop orders, shorts (≤50% of equity), margin call at 30% cover, commission + spread. |
 | News | ✅ MVP | Templates with company/sector/macro scope, sentiment ranges and rumour probability; scheduled 3 days ahead (enables insider tips); real news moves fair value, rumours fade; player headlines for arrests, verdicts and huge purchases. |
-| Shop & customisation | ✅ MVP | Cars, homes, watches, yachts/jets/helicopters; procedural SVG art; customisation priced by item tier; appreciation/depreciation, upkeep, resale haircut, reputation. |
+| Shop & customisation | ✅ v0.2 | 550+ real-brand items (cars, watches, homes in 24 cities, yachts/jets/helicopters) with faceted filtering, search and sorting; procedural SVG art per body/watch/home style; customisation priced by item tier; appreciation/depreciation, upkeep, resale haircut, reputation. |
 | Casino | ✅ MVP | Blackjack, European roulette. Gambling taxable. |
 | Crime | ✅ MVP | Offshore shell + transfers, insider tips, bribing officials (sting risk), tax evasion. |
 | Heat & justice | ✅ MVP | 3 agencies, daily investigation rolls, evidence growth, bribe/lawyer/shred actions, trial with lawyer tiers, judge bribes, plea deals, fines, offshore seizure, prison with work/bribe/appeal. |
