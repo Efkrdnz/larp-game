@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: #0b0e14;
+}
+
+body {
+  font-feature-settings: 'tnum' 1, 'cv11' 1;
+  overscroll-behavior-y: none;
+}
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-ink-700/70 bg-ink-850 shadow-[0_1px_0_rgba(255,255,255,0.03)_inset];
+  }
+  .panel-pad {
+    @apply p-4 sm:p-5;
+  }
+  .panel-title {
+    @apply mb-3 flex items-center justify-between gap-2 font-display text-sm font-bold uppercase tracking-[0.12em] text-ink-300;
+  }
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-primary {
+    @apply btn bg-gold-500 text-ink-950 hover:bg-gold-400;
+  }
+  .btn-ghost {
+    @apply btn border border-ink-600 bg-ink-800 text-ink-100 hover:border-ink-500 hover:bg-ink-700;
+  }
+  .btn-buy {
+    @apply btn bg-up text-ink-950 hover:brightness-110;
+  }
+  .btn-sell {
+    @apply btn bg-down text-white hover:brightness-110;
+  }
+  .btn-crime {
+    @apply btn border border-crime-500/60 bg-crime-500/15 text-red-200 hover:bg-crime-500/25;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-ink-600 bg-ink-800 px-2.5 py-1 text-xs font-medium text-ink-200;
+  }
+  .chip-active {
+    @apply border-gold-500 bg-gold-500/15 text-gold-400;
+  }
+  .input {
+    @apply w-full rounded-xl border border-ink-600 bg-ink-900 px-3 py-2.5 text-ink-100 outline-none placeholder:text-ink-400 focus:border-gold-500;
+  }
+  .label {
+    @apply mb-1 block text-xs font-medium uppercase tracking-wider text-ink-400;
+  }
+  .stat-label {
+    @apply text-[11px] font-medium uppercase tracking-wider text-ink-400;
+  }
+  .stat-value {
+    @apply font-mono text-lg font-semibold text-ink-100;
+  }
+}
+
+.ticker-track {
+  animation: ticker 90s linear infinite;
+}
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.flash-up {
+  animation: flashUp 0.8s ease-out;
+}
+.flash-down {
+  animation: flashDown 0.8s ease-out;
+}
+@keyframes flashUp {
+  from {
+    background: rgba(34, 197, 94, 0.25);
+  }
+}
+@keyframes flashDown {
+  from {
+    background: rgba(239, 68, 68, 0.25);
+  }
+}
+
+.toast-in {
+  animation: toastIn 0.25s ease-out;
+}
+@keyframes toastIn {
+  from {
+    transform: translateY(-8px);
+    opacity: 0;
+  }
+}
+
+.deal-in {
+  animation: dealIn 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes dealIn {
+  from {
+    transform: translate(40px, -60px) rotate(12deg);
+    opacity: 0;
+  }
+}
+
+.pulse-red {
+  animation: pulseRed 1.6s ease-in-out infinite;
+}
+@keyframes pulseRed {
+  50% {
+    box-shadow: 0 0 0 6px rgba(220, 38, 38, 0.15);
+  }
+}
+
+.noise-bg {
+  background-image: radial-gradient(1200px 600px at 10% -10%, rgba(240, 180, 41, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(34, 197, 94, 0.06), transparent 60%);
+}
+
+.felt {
+  background: radial-gradient(ellipse at center, #136b3a 0%, #0c4a28 60%, #07301a 100%);
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
